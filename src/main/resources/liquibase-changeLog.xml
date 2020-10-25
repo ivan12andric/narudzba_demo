@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<databaseChangeLog
+	xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+         http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.8.xsd">
+
+
+	<changeSet id="1" author="auto">
+		<createTable tableName="prodaja">
+			<column name="id" type="int" autoIncrement="true">
+				<constraints primaryKey="true" nullable="false" />
+			</column>
+			<column name="datum" type="date">
+				<constraints nullable="false" />
+			</column>
+			<column name="prod" type="varchar(255)">
+				<constraints nullable="false" />
+			</column>
+			<column name="artikl" type="varchar(255)">
+				<constraints nullable="false" />
+			</column>
+			<column name="kolicina" type="int">
+				<constraints nullable="false" />
+			</column>
+		</createTable>
+
+		<createTable tableName="zaliha">
+			<column name="id" type="int" autoIncrement="true">
+				<constraints primaryKey="true" nullable="false" />
+			</column>
+			<column name="datum" type="date">
+				<constraints nullable="false" />
+			</column>
+			<column name="prod" type="varchar(255)">
+				<constraints nullable="false" />
+			</column>
+			<column name="artikl" type="varchar(255)">
+				<constraints nullable="false" />
+			</column>
+			<column name="kolicina" type="int">
+				<constraints nullable="false" />
+			</column>
+
+		</createTable>
+		
+		<createTable tableName="zaglavlje_narudzbe" >
+			<column name="id" type="int" autoIncrement="true">
+				<constraints primaryKey="true" nullable="false" />
+			</column>
+			<column name="datum_narudzbe" type="date">
+				<constraints nullable="false" />
+			</column>
+			<column name="broj_prodavaonice" type="varchar(255)">
+				<constraints nullable="false" />
+			</column>		
+
+		</createTable>
+		
+		
+		<createTable tableName="stavka_narudzbe">
+			<column name="id" type="int" autoIncrement="true">
+				<constraints primaryKey="true" nullable="false" />
+			</column>
+			<column name="artikl" type="varchar(255)">
+				<constraints nullable="false" />
+			</column>
+			<column name="kolicina" type="int">
+				<constraints nullable="false" />
+			</column>
+			<column name="zaglavlje_id" type="int">
+				<constraints nullable="false" />
+			</column>			
+
+		</createTable>
+	</changeSet>
+
+
+</databaseChangeLog>

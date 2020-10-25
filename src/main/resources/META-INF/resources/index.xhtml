@@ -1,0 +1,152 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+		"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+<h:head>
+</h:head>
+<h:body>
+	<h:form id="form">
+		<p:growl>
+			<p:autoUpdate />
+		</p:growl>
+		<div class="p-grid">
+			<div class="p-col-12">
+				<h1 style="margin-top: 0px; margin-bottom: 0px">Narudžba demo</h1>
+			</div>
+			<div class="p-col-12 p-md-6">
+				<h2>Prodaja</h2>
+				<p:dataTable
+					var="prodaja"
+					value="#{narudzbaController.prodajaList}"
+					scrollable="true"
+					scrollHeight="350">
+					<p:column headerText="Datum">
+						<h:outputText value="#{prodaja.datum}">
+							<f:convertDateTime
+								type="localDate"
+								pattern="dd.MM.yyyy" />
+						</h:outputText>
+					</p:column>
+					<p:column headerText="Prod">
+						<h:outputText value="#{prodaja.prod}" />
+					</p:column>
+					<p:column headerText="Artikl">
+						<h:outputText value="#{prodaja.artikl}" />
+					</p:column>
+					<p:column headerText="Prodaja">
+						<h:outputText value="#{prodaja.kolicina}" />
+					</p:column>
+				</p:dataTable>
+			</div>
+			<div
+				class="p-col-12 p-md-6"
+				style="margin-bottom: 20px">
+				<h2>Zaliha</h2>
+				<p:dataTable
+					var="zaliha"
+					value="#{narudzbaController.zalihaList}"
+					scrollable="true"
+					scrollHeight="350">
+					<p:column headerText="Datum">
+						<h:outputText value="#{zaliha.datum}">
+							<f:convertDateTime
+								type="localDate"
+								pattern="dd.MM.yyyy" />
+						</h:outputText>
+					</p:column>
+					<p:column headerText="Prod">
+						<h:outputText value="#{zaliha.prod}" />
+					</p:column>
+					<p:column headerText="Artikl">
+						<h:outputText value="#{zaliha.artikl}" />
+					</p:column>
+					<p:column headerText="Zaliha">
+						<h:outputText value="#{zaliha.kolicina}" />
+					</p:column>
+				</p:dataTable>
+			</div>
+		</div>
+		<div class="p-grid p-justify-start">
+			<div
+				class="p-col-fixed"
+				style="width: 165px">
+				<p:commandButton
+					value="Kreiraj narudžbu"
+					process="@this brojDana"
+					update="@form"
+					actionListener="#{narudzbaController.kreirajNarudzbu()}" />
+			</div>
+			<div
+				class="p-col-fixed"
+				style="width: 300px">
+				<h:outputText value="za : " />
+				<p:inputNumber
+					id="brojDana"
+					value="#{narudzbaController.brojDana}"
+					decimalPlaces="0"
+					minValue="1"
+					maxValue="100"
+					size="2"
+					required="true"
+					requiredMessage="Broj dana je obavezan podatak" />
+				<h:outputText value=" dan(a) " />
+			</div>
+			<div class="p-col">
+				<p:message
+					id="brojDanaMessage"
+					for="brojDana" />
+			</div>
+		</div>
+		<div class="p-grid">
+			<div class="p-col-12">
+				<h2>Narudžba</h2>
+				<p:dataTable
+					var="zaglavljeNarudzbe"
+					value="#{narudzbaController.zaglavljeNarudzbeList}"
+					selection="#{narudzbaController.selectedZaglavljeNarudzbe}"
+					selectionMode="single"
+					rowKey="#{zaglavljeNarudzbe.id}">
+					<p:column headerText="Datum">
+						<h:outputText value="#{zaglavljeNarudzbe.datumNarudzbe}">
+							<f:convertDateTime
+								type="localDate"
+								pattern="dd.MM.yyyy" />
+						</h:outputText>
+					</p:column>
+					<p:column headerText="Prod">
+						<h:outputText value="#{zaglavljeNarudzbe.brojProdavaonice}" />
+					</p:column>
+					<p:ajax
+						event="rowSelect"
+						update=":form:stavkeNarudzbe" />
+					<p:ajax
+						event="rowUnselect"
+						update=":form:stavkeNarudzbe" />
+				</p:dataTable>
+				<h3>Stavke narudžbe</h3>
+				<p:dataTable
+					id="stavkeNarudzbe"
+					var="stavkaNarudzbe"
+					value="#{narudzbaController.selectedZaglavljeNarudzbe.stavkaNarudzbeList}"
+					rowKey="#{stavkaNarudzbe.id}">
+					<p:column headerText="Artikla">
+						<h:outputText value="#{stavkaNarudzbe.artikl}" />
+					</p:column>
+					<p:column headerText="Količina">
+						<h:outputText value="#{stavkaNarudzbe.kolicina}" />
+					</p:column>
+				</p:dataTable>
+			</div>
+		</div>
+	</h:form>
+	<h:outputStylesheet
+		name="primeflex.css"
+		library="primeflex" />
+	<h:outputStylesheet name="css/app.css" />
+</h:body>
+</html>
